@@ -62,3 +62,5 @@ connection().then(() => {
 ).catch((error) => {
     console.log('Failed to connect to MongoDB', error);
 })
+
+// "build": "babel src -d dist"
