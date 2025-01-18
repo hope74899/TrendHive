@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: prata;
+}
+
+.prata-regular {
+    font-family: "Prata", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+select,input,textarea{
+    border: 1px solid #c2c2c2;
+    outline-color: #c586A5;
+    border-radius: 4px;
+}
+   
