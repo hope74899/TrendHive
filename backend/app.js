@@ -45,9 +45,9 @@ app.use(router);
 app.get('/text', (req, res) => {
     res.send('app is running')
 })
-app.get('/test-image', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'p_img1.png'));
-});
+// app.get('/test-image', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'p_img1.png'));
+// });
 app.use((req, res, next) => {
     console.log('Middleware initialized');
     next();

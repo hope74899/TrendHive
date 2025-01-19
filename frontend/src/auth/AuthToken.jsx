@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
     // Determine base URL for images
     const localBaseUrl = baseURL === 'http://localhost:8000'
         ? 'http://localhost:8000/public/'  // Development URL
-        : `${baseURL}/api/`;  // Production URL on cPanel
+        : `${baseURL}/`;  // Production URL on cPanel
 
     const isLoggin = user?.isLoggin;
     const userId = user?._id;
