@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const path = require("path");
 
 
+
 dotenv.config();
 const app = express();
 const corsOptions = {
@@ -18,14 +19,7 @@ const corsOptions = {
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
     credentials: true
 }
-// app.use("/public", express.static(path.join(__dirname, "public")));
-if (process.env.NODE_ENV === 'production') {
-    // In production, serve from 'dist/public'
-    app.use('/public', express.static(path.join(__dirname, 'dist', 'public')));
-} else {
-    // Locally, serve from 'public'
-    app.use('/public', express.static(path.join(__dirname, 'public')));
-}
+app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
