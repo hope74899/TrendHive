@@ -41,7 +41,7 @@ const addProduct = async (req, res, next) => {
             images: uploadedImages,
             date: Date.now()
         }
-        console.log(productData);
+        // console.log(productData);
 
         const product = new ProductModel(productData);
         await product.save();

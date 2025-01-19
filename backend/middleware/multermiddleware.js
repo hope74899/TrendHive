@@ -2,7 +2,8 @@ const multer = require('multer'); // Import the multer library
 const path = require('path');    // Import the path module
 
 // __dirname is available by default in CommonJS to get the current directory of the file
-const publicDir = path.join(__dirname, '..', 'public');// Resolve the 'public' directory path relative to the current file
+const publicDir = path.join(__dirname, '..', 'public'); // Resolve the 'public' directory path relative to the current file
+console.log('Public Directory:', publicDir);
 
 // Configure storage using Multer's diskStorage
 const storage = multer.diskStorage({
