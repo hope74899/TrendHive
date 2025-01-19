@@ -45,6 +45,8 @@ app.use(router);
 app.get('/text', (req, res) => {
     res.send('app is running')
 })
+console.log('Public Directory Path:', publicDir);
+
 // app.get('/test-image', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'public', 'p_img1.png'));
 // });

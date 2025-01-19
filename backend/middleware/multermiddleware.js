@@ -3,12 +3,14 @@ const path = require('path');    // Import the path module
 
 // __dirname is available by default in CommonJS to get the current directory of the file
 const publicDir = path.join(__dirname, '..', 'public'); // Resolve the 'public' directory path relative to the current file
-console.log('Public Directory:', publicDir);
 
 // Configure storage using Multer's diskStorage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
+        const filePath = path.join(publicDir, file.originalname);
+        console.log('Saving file at:', filePath);
         cb(null, publicDir); // Set the destination directory for storing uploaded files
+
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname); // Use the original name of the uploaded file
