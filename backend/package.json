@@ -2,8 +2,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
-    "start": "node dist/app.js",
-    "build": "babel src -d dist"
+    "start": "node dist/app.js",    
+    "build": "babel . -d dist --ignore dist,node_modules"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
