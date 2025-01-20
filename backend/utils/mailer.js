@@ -103,4 +103,4 @@ const sendCouponEmail = async (recipientEmail, couponCode) => {
     }
 };
 
-module.exports = sendOTPEmail;
+module.exports = { sendOTPEmail, sendCouponEmail };
