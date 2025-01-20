@@ -12,6 +12,7 @@ const { addProduct, listProducts, removeProduct, singleProduct } = require('../c
 const { addToCart, updateCart, getUserCart, deleteFromCart } = require('../controllers/cart')
 const { placeOrder, placeOrderStripe, allOrders, userOrders, updateStatus } = require('../controllers/order');
 const adminMiddleware = require('../middleware/adminMiddleware');
+const { subscribeUser, verifySubscriber } = require('../controllers/subscription');
 
 router.post('/api/user/create', createUser)
 router.get('/api/user/get', authMiddleware, adminMiddleware, getUser)
@@ -53,7 +54,9 @@ router.post('/api/order/cod', authMiddleware, placeOrder);
 
 // user features
 router.get('/api/userorders', authMiddleware, userOrders);
-
+// subscription
+router.post('/api/subscribe', authMiddleware, subscribeUser);
+router.post('/api/subscriber/verify', authMiddleware, verifySubscriber);
 
 
 
