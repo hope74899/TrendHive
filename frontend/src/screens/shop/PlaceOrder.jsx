@@ -12,6 +12,7 @@ const PlaceOrder = () => {
   const navigate = useNavigate();
   const { cartItems, setCartItems, getCartAmount, token, delivery_fee, products } = useAuth();
   const [method, setMethod] = useState("cod");
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -96,6 +97,7 @@ const PlaceOrder = () => {
         address,
       };
 
+      
       switch (method) {
         case "cod": {
           const response = await axios.post(`${baseURL}/api/order/cod`, orderData, {
@@ -112,18 +114,24 @@ const PlaceOrder = () => {
         }
 
         case "stripe": {
-          const response = await axios.post(`${baseURL}/api/order/stripe`, orderData, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          if (response.status === 201) {
-            toast.success(response.data.message);
-            setCartItems({});
-            navigate("/orders");
-          } else {
-            toast.error(response.data.message || "Failed to place order using Stripe.");
+          try {
+              const response = await axios.post(`${baseURL}/api/order/stripe`, orderData, {
+                  headers: { Authorization: `Bearer ${token}` },
+              });
+              if (response.status === 200) {
+                setCartItems({});
+                  const { url } = response.data;
+                  window.location.replace(url);
+              } else {
+                  console.log("Stripe error message:", response.data.message);
+                  toast.error(response.data.message || "Failed to place order using Stripe.");
+              }
+          } catch (error) {
+              console.error("Error during Stripe order:", error.response || error);
+              toast.error(error.response?.data?.message || "Failed to place order using Stripe.");
           }
           break;
-        }
+      }
 
         default:
           toast.error("Invalid payment method selected.");

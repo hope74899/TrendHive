@@ -10,7 +10,7 @@ const { sendOTP } = require('../controllers/sendOTP')
 const { createUser, getUser, updateUser, deleteUser, login, currentUser, verifyOTP, logout, searchEmail, updatePassword, googleCallback, getToken } = require('../controllers/user')
 const { addProduct, listProducts, removeProduct, singleProduct } = require('../controllers/product');
 const { addToCart, updateCart, getUserCart, deleteFromCart } = require('../controllers/cart')
-const { placeOrder, placeOrderStripe, allOrders, userOrders, updateStatus } = require('../controllers/order');
+const { placeOrder, placeOrderStripe, confirmOrder, allOrders, userOrders, updateStatus } = require('../controllers/order');
 const adminMiddleware = require('../middleware/adminMiddleware');
 const { subscribeUser, verifySubscriber } = require('../controllers/subscription');
 
@@ -50,6 +50,7 @@ router.get('/api/order/list', authMiddleware, adminMiddleware, allOrders);
 router.put('/api/order/status', authMiddleware, adminMiddleware, updateStatus);
 // payment features
 router.post('/api/order/stripe', authMiddleware, placeOrderStripe);
+router.post('/api/order/confirm', confirmOrder);
 router.post('/api/order/cod', authMiddleware, placeOrder);
 
 // user features

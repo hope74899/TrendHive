@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import useTokenExpiration from "./auth/useTokenExpiration ";
 import ProtectedRoute from "./ProtectedRoute";
+import StripeVerify from "./screens/shop/StripeVerify";
 
 
 //User related imports
@@ -66,6 +67,7 @@ function App() {
             <Route path="/product/:productId" element={<Product />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/place-order" element={<PlaceOrder />} />
+            <Route path="/verify" element={<StripeVerify />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
