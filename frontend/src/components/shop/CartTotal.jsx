@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../auth/AuthToken";
 import Title from "./Title";
 import axios from "axios";
@@ -6,12 +6,22 @@ import baseURL from "../../baseurl";
 import { toast } from "react-toastify";
 
 const CartTotal = () => {
-    const { currency, getCartAmount, delivery_fee, token } = useAuth();
+    const { currency, getCartAmount, delivery_fee, token, setTotalAmount } = useAuth();
 
     const cartAmount = getCartAmount(); // Store the cart total
     const [coupon, setCoupon] = useState("");
     const [discount, setDiscount] = useState(0); // Store the discount amount
     const [error, setError] = useState(""); // For showing error messages
+
+    // Function to compute the total amount
+    const calculateTotal = () => {
+        return cartAmount - discount + delivery_fee;
+    };
+
+    // Update the global total amount whenever cartAmount, discount, or delivery_fee changes
+    useEffect(() => {
+        setTotalAmount(calculateTotal());
+    }, [cartAmount, discount, delivery_fee]);
 
     const handleCouponSubmit = async () => {
         if (!coupon) {
@@ -37,7 +47,7 @@ const CartTotal = () => {
             if (response.status === 200) {
                 setDiscount(cartAmount * 0.2); // Apply 20% discount
                 setCoupon(""); // Clear the coupon field
-                toast.success(response.data.message)
+                toast.success(response.data.message);
             } else {
                 setError(response.data.message || "Invalid coupon code.");
                 setDiscount(0); // Reset discount on failure
@@ -47,7 +57,6 @@ const CartTotal = () => {
             setError("Failed to verify coupon. Please try again.");
         }
     };
-
 
     return (
         <div className="w-full">
@@ -76,7 +85,6 @@ const CartTotal = () => {
                     </button>
                 </div>
 
-
                 {/* Error Message */}
                 {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                 <div className="flex justify-between">
@@ -92,9 +100,7 @@ const CartTotal = () => {
                     <b>Total</b>
                     <b>
                         {currency}
-                        {cartAmount === 0
-                            ? 0
-                            : (cartAmount - discount + delivery_fee)}
+                        {calculateTotal()}
                     </b>
                 </div>
             </div>

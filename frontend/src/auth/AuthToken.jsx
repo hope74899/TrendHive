@@ -10,7 +10,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null); // Store user details
     const [products, setProduct] = useState([]);
-    const [token, setToken] = useState(() => localStorage.getItem("token")); // Retrieve token from localStorage
+    const [token, setToken] = useState(() => localStorage.getItem("token"));  // Retrieve token from localStorage
     const navigate = useNavigate();
     // Helper function to store token
     const storeToken = (data) => {
@@ -99,6 +99,7 @@ export const AuthProvider = ({ children }) => {
 
     const currency = '$';
     const delivery_fee = 10;
+    const [totalAmount, setTotalAmount] = useState(0)
     const [cartItems, setCartItems] = useState({})
     // Determine base URL for images
     const localBaseUrl = baseURL === 'http://localhost:8000'
@@ -335,13 +336,15 @@ export const AuthProvider = ({ children }) => {
                 getCartAmount,
                 setCartItems,
                 getProductsData,
+                setTotalAmount,
                 user,
                 token,
                 currency,
                 delivery_fee,
                 products,
                 cartItems,
-                localBaseUrl
+                localBaseUrl,
+                totalAmount
             }}
         >
             {children}

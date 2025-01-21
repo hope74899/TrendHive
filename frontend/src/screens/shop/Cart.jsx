@@ -116,8 +116,14 @@ const Cart = () => {
         <div className="w-full sm:[450px]">
           <CartTotal />
           <div className="w-full text-end">
-            <button onClick={() => { navigate('/place-order') }} className="bg-black text-white text-sm my-8 px-8 py-3">PROCEED TO CHECKOUT</button>
-
+            <button
+              onClick={() => { navigate('/place-order') }}
+              disabled={cartData.length === 0}
+              className={`text-sm my-8 px-8 py-3 ${cartData.length > 0 ? "bg-black text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
+            >
+              PROCEED TO CHECKOUT
+            </button>
           </div>
         </div>
       </div>

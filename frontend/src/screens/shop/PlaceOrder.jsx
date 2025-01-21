@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { assets } from "../../assets/frontend_assets/assets";
-import CartTotal from "../../components/shop/CartTotal";
 import Title from "../../components/shop/Title";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,7 +9,7 @@ import { useAuth } from "../../auth/AuthToken";
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
-  const { cartItems, setCartItems, getCartAmount, token, delivery_fee, products } = useAuth();
+  const { cartItems, setCartItems, getCartAmount, token, delivery_fee, products,totalAmount } = useAuth();
   const [method, setMethod] = useState("cod");
 
   const [formData, setFormData] = useState({
@@ -97,7 +96,7 @@ const PlaceOrder = () => {
         address,
       };
 
-      
+
       switch (method) {
         case "cod": {
           const response = await axios.post(`${baseURL}/api/order/cod`, orderData, {
@@ -115,23 +114,23 @@ const PlaceOrder = () => {
 
         case "stripe": {
           try {
-              const response = await axios.post(`${baseURL}/api/order/stripe`, orderData, {
-                  headers: { Authorization: `Bearer ${token}` },
-              });
-              if (response.status === 200) {
-                setCartItems({});
-                  const { url } = response.data;
-                  window.location.replace(url);
-              } else {
-                  console.log("Stripe error message:", response.data.message);
-                  toast.error(response.data.message || "Failed to place order using Stripe.");
-              }
+            const response = await axios.post(`${baseURL}/api/order/stripe`, orderData, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (response.status === 200) {
+              setCartItems({});
+              const { url } = response.data;
+              window.location.replace(url);
+            } else {
+              console.log("Stripe error message:", response.data.message);
+              toast.error(response.data.message || "Failed to place order using Stripe.");
+            }
           } catch (error) {
-              console.error("Error during Stripe order:", error.response || error);
-              toast.error(error.response?.data?.message || "Failed to place order using Stripe.");
+            console.error("Error during Stripe order:", error.response || error);
+            toast.error(error.response?.data?.message || "Failed to place order using Stripe.");
           }
           break;
-      }
+        }
 
         default:
           toast.error("Invalid payment method selected.");
@@ -235,7 +234,12 @@ const PlaceOrder = () => {
       {/* Right Side */}
       <div className="mt-8">
         <div className="mt-8 min-w-80">
-          <CartTotal />
+          <div className="flex justify-between">
+            <b>Total</b>
+            <b>
+              {totalAmount}.00
+            </b>
+          </div>
         </div>
         <div className="mt-12">
           <Title text1={"PAYMENT"} text2={"METHOD"} />
