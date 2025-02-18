@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser');
 dotenv.config();
 const app = express();
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: env.process.FRONTENDPATH,
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
     credentials: true
 }
