@@ -45,14 +45,9 @@ const UserSchema = new mongoose.Schema(
             type: Boolean,
             default: false, // True if the user is created via Google OAuth
         },
-
         role: {
             type: String,
             default: 'User'
-        },
-        cartData: {
-            type: Object,
-            default: {}
         },
         isLoggin: {
             type: Boolean,

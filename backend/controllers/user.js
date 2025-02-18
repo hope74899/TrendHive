@@ -45,7 +45,6 @@ const createUser = async (req, res, next) => {
 const getUser = async (req, res, next) => {
     try {
         const users = await User.find();
-
         if (!users || users.length === 0) {
             return res.status(404).json({ message: 'No users found' });
         }
@@ -59,37 +58,32 @@ const getUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
     try {
         const { id } = req.params; // Extract the user ID from the route params
-        const { firstName, lastName, email, role } = req.body;
+        const { firstName, lastName, email } = req.body;
 
-        // Check if at least one field is provided for update
-        if (!firstName && !lastName && !email && !role) {
-            return res.status(400).json({ message: 'At least one field is required for update' });
+        // Check if all required fields are provided
+        if (!firstName || !lastName || !email) {
+            return res.status(400).json({ message: 'All fields are required for update' });
         }
 
-        // Find the user by ID first
-        const user = await User.findById(id);
+        // Find and update the user
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { firstName, lastName, email }, // Fields to update
+            { new: true, runValidators: true } // Return updated document and run validations
+        );
 
         // If user not found
-        if (!user) {
+        if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
-
-        // Update only the provided fields
-        if (firstName) user.firstName = firstName;
-        if (lastName) user.lastName = lastName;
-        if (email) user.email = email;
-        if (role) user.role = role;
-
-        // Save the updated user
-        const updatedUser = await user.save();
 
         res.status(200).json({
             message: 'User updated successfully',
             user: updatedUser,
         });
     } catch (err) {
-        console.error('Error while updating user:', err);
-        next(err);
+        console.log('Error while updating user:', err);
+        next(err)
     }
 };
 const deleteUser = async (req, res, next) => {
@@ -168,7 +162,6 @@ const login = async (req, res) => {
         const updatedUser = await User.findOneAndUpdate({ email }, { isLoggin }, { new: true });
         const token = await user.generateToken()
         // Generate a JWT token for the user
-        // console.log(token);
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // Only secure in production
@@ -188,6 +181,45 @@ const login = async (req, res) => {
         next(err)
     }
 };
+// const logout = async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+//         // Validate userId
+//         if (!userId) {
+//             return res.status(400).json({ message: "User ID required" });
+//         }
+
+//         // Check if user exists
+//         const user = await User.findById(userId);
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+
+//         // Update user's isLoggin field to false
+//         const updatedUser = await User.findByIdAndUpdate(
+//             userId,
+//             { isLoggin: false },
+//             { new: true }
+//         );
+
+//         if (!updatedUser) {
+//             return res.status(500).json({ message: "Failed to log out user." });
+//         }
+
+//         // Clear the token cookie
+//         res.clearCookie("token", {
+//             httpOnly: true,
+//             secure: process.env.NODE_ENV === "production", // Must match login config
+//             sameSite: "strict",
+//             path: "/", // Must match login config
+//         });
+
+//         return res.status(200).json({ message: "User logged out successfully" });
+//     } catch (error) {
+//         console.error("Error during logout:", error);
+//         return res.status(500).json({ message: "Internal Server Error" });
+//     }
+// };
 const logout = async (req, res) => {
     try {
         if (!req.user || !req.user._id) {
@@ -242,6 +274,7 @@ const logout = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 const verifyOTP = async (req, res, next) => {
     try {
         const { email, otp } = req.body;
@@ -320,6 +353,7 @@ const updatePassword = async (req, res, next) => {
         next(error);
     }
 };
+// Google OAuth Callback
 const googleCallback = async (req, res) => {
     try {
         const user = req.user; // Passport attaches the authenticated user to req.user
@@ -346,6 +380,7 @@ const googleCallback = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 const getToken = (req, res) => {
     try {
         // console.log("Request Headers:", req.headers);

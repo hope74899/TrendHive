@@ -7,20 +7,16 @@ const errorMiddleware = require('./middleware/errorHandlerMiddleware')
 const session = require("express-session");
 const passport = require("./config/passport");
 const cookieParser = require('cookie-parser');
-const path = require("path");
 
 
 
 dotenv.config();
 const app = express();
 const corsOptions = {
-    origin: process.env.frontendPath,
-    // origin: "https://trend-hive-two.vercel.app",
+    origin: "http://localhost:5173",
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
     credentials: true
 }
-// app.use("/public", express.static(path.join(__dirname, "../public")));
-app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
@@ -45,10 +41,6 @@ app.use(router);
 app.get('/text', (req, res) => {
     res.send('app is running')
 })
-
-// app.get('/test-image', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'p_img1.png'));
-// });
 app.use((req, res, next) => {
     console.log('Middleware initialized');
     next();
@@ -67,4 +59,3 @@ connection().then(() => {
 ).catch((error) => {
     console.log('Failed to connect to MongoDB', error);
 })
-

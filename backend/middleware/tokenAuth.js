@@ -5,10 +5,10 @@ const authMiddleware = async (req, res, next) => {
     try {
         // Extract token from Authorization header
         const token = req.header("Authorization");
-        // console.log(token);
         if (!token || !token.startsWith("Bearer ")) {
             return res.status(401).json({ message: 'Unauthorized: Invalid Authorization header' });
         }
+
         // Remove "Bearer" prefix and trim
         const jwttoken = token.replace("Bearer", "").trim();
 

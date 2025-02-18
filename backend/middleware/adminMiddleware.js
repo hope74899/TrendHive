@@ -1,8 +1,6 @@
 const adminMiddleware = async (req, res, next) => {
     try {
         // Check if req.user exists and has isAdmin property
-        // console.log(req.user);
-
         if (!req.user || req.user.role !== 'admin') {
             console.log("Unauthorized access attempt to admin route.");
             return res.status(403).json({ message: "Access denied. Admins only." });
