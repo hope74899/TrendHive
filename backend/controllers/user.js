@@ -371,7 +371,7 @@ const googleCallback = async (req, res) => {
             path: "/",
             maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
         });
-
+        console.log(process.env.FRONTENDPATH);
         // Redirect to frontend route after setting the cookie
         const frontendRedirectURL = `${process.env.FRONTENDPATH}/google-login`;
         return res.redirect(frontendRedirectURL); // Adjust the URL based on your frontend domain

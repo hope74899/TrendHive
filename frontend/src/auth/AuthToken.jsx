@@ -102,10 +102,9 @@ export const AuthProvider = ({ children }) => {
     const [totalAmount, setTotalAmount] = useState(0)
     const [cartItems, setCartItems] = useState({})
     // Determine base URL for images
-    const localBaseUrl = baseURL === 'http://localhost:8000'
-        ? 'http://localhost:8000/public/'  // Development URL
-        : `${baseURL}/`;  // Production URL on cPanel
+    const localBaseUrl = `${baseURL}/`; 
 
+    
     const isLoggin = user?.isLoggin;
     const userId = user?._id;
 
