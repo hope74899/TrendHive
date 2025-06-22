@@ -146,13 +146,10 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (token) {
             getProductsData(); // Fetch product data when token is available
-
             if (userId) {
                 getUserCart(); // Fetch user cart when both token and userId are available
             }
-        }
     }, [token, userId]);
 
     const addToCart = async (itemId, size) => {
