@@ -364,12 +364,12 @@ const googleCallback = async (req, res) => {
         // Generate a JWT token using a User model method
         const token = await user.generateToken();
         // Store the token as an HTTP-only cookie
-        res.cookie("token", token, {
+     res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "None",
+            secure: true,               // 🔥 MUST be true for SameSite: "None"
+            sameSite: "None",           // 🔥 REQUIRED for cross-site cookies
             path: "/",
-            maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
+            maxAge: 10 * 24 * 60 * 60 * 1000,
         });
         console.log(process.env.FRONTENDPATH);
         // Redirect to frontend route after setting the cookie
