@@ -385,7 +385,7 @@ const getToken = (req, res) => {
     try {
         // console.log("Request Headers:", req.headers);
         // Ensure req.cookies exists
-        if (!req.cookies) {
+        if (!req.cookies.token) {
             return res.status(400).json({ message: "Cookies are not available" });
         }
         const token = req.cookies.token; // Access the token from cookies
