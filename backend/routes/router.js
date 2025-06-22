@@ -26,7 +26,7 @@ router.post('/api/logout/:userId', authMiddleware, logout)
 router.post('/api/forgot-password', searchEmail)
 router.put('/api/update-password', updatePassword)
 
-router.get('/api/get-token', getToken);
+router.get('/api/get-token',authMiddleware,getToken);
 router.get('/api/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), googleCallback);
 
