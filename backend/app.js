@@ -1,6 +1,7 @@
 const express = require('express')
-const connection = require('./config/database')
 const dotenv = require('dotenv')
+dotenv.config();
+const connection = require('./config/database')
 const cors = require('cors')
 const router = require('./routes/router')
 const errorMiddleware = require('./middleware/errorHandlerMiddleware')
@@ -10,10 +11,10 @@ const cookieParser = require('cookie-parser');
 
 
 
-dotenv.config();
+
 const app = express();
 const corsOptions = {
-    origin: process.env.FRONTENDPATH || "https://trend-hive-two.vercel.app",
+    origin: process.env.FRONTENDPATH,
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
     credentials: true
 }
