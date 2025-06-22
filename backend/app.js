@@ -38,7 +38,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
+// app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 
 app.use(router);
 app.get('/text', (req, res) => {
@@ -57,6 +58,8 @@ const port = process.env.PORT || 8000
 connection().then(() => {
     app.listen(port, () => {
         console.log(`app is running on port ${port}`)
+ console.log(`Server running. __dirname is: ${__dirname}`); // Good for debugging
+  console.log(`Serving static files from: ${path.join(__dirname, '..', 'public')}`);
     })
 }
 ).catch((error) => {
