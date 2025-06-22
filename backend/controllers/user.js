@@ -165,7 +165,7 @@ const login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // Only secure in production
-            sameSite: "strict",
+             sameSite: "None", // Match session config
             path: "/", // Match this
             maxAge: 10 * 24 * 60 * 60 * 1000, // 10 day expiration
         });
@@ -249,7 +249,7 @@ const logout = async (req, res) => {
         res.clearCookie("token", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // Must match login config
-            sameSite: "strict",
+            sameSite: "None", // Match session config
             path: "/", // Must match login config
         });
 
@@ -263,7 +263,7 @@ const logout = async (req, res) => {
             res.clearCookie("connect.sid", {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production", // Match session config
-                sameSite: "strict", // Match session config
+                sameSite: "None", // Match session config
                 path: "/", // Match session config
             });
 
@@ -367,7 +367,7 @@ const googleCallback = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: "None",
             path: "/",
             maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
         });
