@@ -1,6 +1,6 @@
 const User = require('../models/users')
 const crypto = require('crypto');
-const sendOTPEmail = require('../utils/mailer')
+const {sendOTPEmail} = require('../utils/mailer')
 
 
 const createUser = async (req, res, next) => {
