@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
     const [totalAmount, setTotalAmount] = useState(0)
     const [cartItems, setCartItems] = useState({})
     // Determine base URL for images
-    const localBaseUrl = `${baseURL}/`; 
+    const localBaseUrl = `${baseURL}/public/`; 
 
     
     const isLoggin = user?.isLoggin;
