@@ -13,6 +13,7 @@ const cookieParser = require('cookie-parser');
 
 
 const app = express();
+app.use("/public", express.static(path.join(__dirname, "public")));
 const corsOptions = {
     origin: process.env.FRONTENDPATH,
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
@@ -28,7 +29,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Only secure in production
-        sameSite: "strict",
+        sameSite: "None",
         path: "/", // Match this
         maxAge: 10 * 24 * 60 * 60 * 1000, // 10 day expiration
     } // Set to true if using HTTPS
