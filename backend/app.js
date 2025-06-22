@@ -13,7 +13,7 @@ const path =require('path')
 
 
 const app = express();
-app.use("/public", express.static(path.join(__dirname, "public")));
+// app.use("/public", express.static(path.join(__dirname, "public")));
 const corsOptions = {
     origin: process.env.FRONTENDPATH,
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
