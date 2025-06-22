@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 dotenv.config();
+const path =require('path')
 const connection = require('./config/database')
 const cors = require('cors')
 const router = require('./routes/router')
@@ -8,12 +9,11 @@ const errorMiddleware = require('./middleware/errorHandlerMiddleware')
 const session = require("express-session");
 const passport = require("./config/passport");
 const cookieParser = require('cookie-parser');
-const path =require('path')
 
 
 
 const app = express();
-// app.use("/public", express.static(path.join(__dirname, "public")));
+
 const corsOptions = {
     origin: process.env.FRONTENDPATH,
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
@@ -38,6 +38,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(router);
 app.get('/text', (req, res) => {
