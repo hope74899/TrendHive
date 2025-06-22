@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser');
 dotenv.config();
 const app = express();
 const corsOptions = {
-    origin: process.env.FRONTENDPATH,
+    origin: process.env.FRONTENDPATH || "https://trend-hive-two.vercel.app",
     methods: "GET, POST, PATCH, PUT, DELETE, HEAD",
     credentials: true
 }
